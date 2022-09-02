@@ -9,7 +9,7 @@ import wml_utils as wmlu
 import os.path as osp
 import object_detection2.bboxes as odb
 from keypoints.get_keypoints import KPDetection
-from byte_tracker_w_reid_kpsv4.matching import *
+from sportstracker.matching import *
 import sys
 
 sys.path.append("..")

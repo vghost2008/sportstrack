@@ -3,10 +3,6 @@ import cv2
 import torch
 import numpy as np
 from distance import compute_distance_matrix
-from fast_reid.onnx_infer_api import FastReidModel
-from reid_yxd import reid_yxd_torch
-from mfast_reids.fast_reid import MFastReIDS
-from mfast_reid_t0.fast_reid import MFastReIDT0
 from mfast_reid_t1.fast_reid import MFastReIDT1
 from tqdm import tqdm
 import matplotlib.pyplot as plt
@@ -134,13 +130,6 @@ class EvalReid:
 
 
 if __name__ == "__main__":
-    #model = TransReIDSSL()
-    #model = MFastReID()
-    #model = CentroidReidModel()
-    #model = MFastReID17()
-    #model = reid_yxd_torch.ReidYXDModelTorch()
-    #model = MFastReIDS()
-    #model = FastReidModel()
     model = MFastReIDT1()
     eval_dir = "/home/wj/ai/mldata1/SportsMOT-2022-4-24/data/sportsmot_publish/dataset/val"
     #eval_dir = "/home/wj/ai/mldata/MOT/MOT16/train"
