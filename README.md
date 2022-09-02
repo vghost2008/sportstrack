@@ -4,9 +4,9 @@
 
 ## Result On SportsMOT test
 
-|Method|HOTA|AssA|DetA|MOTA|
-|---|---|---|---|---|
-|SportsTrack|76.264|73.538|79.180|89.316|
+|Method|HOTA|AssA|DetA|MOTA|weight|
+|---|---|---|---|---|---|
+|SportsTrack|76.264|73.538|79.180|89.316|[baidu](https://pan.baidu.com/s/1_LP0F-EblkiZ8olI4iv1Pw?pwd=nvq4)|
 
 ## Quick Start
 
@@ -30,7 +30,7 @@ python main.py --split test --gpus 0
 - post process
 
 ```
-python postprocess_tools/main.py
+python postprocess_tools/merge_tracks.py
 python postprocess_tools/interpolation.py
 ```
 
