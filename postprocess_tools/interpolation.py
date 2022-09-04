@@ -2,7 +2,13 @@ import os
 from collections import defaultdict
 import os.path as osp
 import glob
+import argparse
 
+def parse_args():
+    parser = argparse.ArgumentParser(description='MOT')
+    parser.add_argument('--input_txt_dir', type=str,default="/home/wj/ai/mldata1/SportsMOT-2022-4-24/tmp/postprocess_output", help='input dir path')
+    parser.add_argument('--output_txt_dir', type=str,default="/home/wj/ai/mldata1/SportsMOT-2022-4-24/tmp/postprocess_output1",help='output txt dir')
+    return parser.parse_args()
 
 def Iou(rec1,rec2):
   x1,x2,y1,y2 = rec1 #分别是第一个矩形左右上下的坐标
@@ -127,20 +133,13 @@ def frame_interpolation(txtpath,filename,outputpath,testnum,delete_num):
     interpolation_file.writelines(content+interpolation_elements)
     # interpolation_file.writelines(interpolation_elements)
     interpolation_file.close
-# for i in range(3,20):
-#     for j in range(90,95,5):
-
 
 deletenum = 80
 testnum=9
 # interpolation input folder path
-#folderpath = '/opt/DataDisk2/pyz/workspace/data_0823_new/'
-#folderpath = '/home/wj/ai/mldata1/SportsMOT-2022-4-24/tmp/sportsmot-test/PDSMV2SportsTrackerT1/data'
-folderpath = "/home/wj/ai/mldata1/SportsMOT-2022-4-24/tmp/postprocess_output"
-# output folder path
-#outputpath = '/opt/DataDisk2/pyz/workspace/sportsmot0810_txt_outputs/sportsmot_interpolation_output_txt_outputs_0823_0824_'+ str(testnum)+"_del_"+str(deletenum)
-outputpath = '/home/wj/ai/mldata1/SportsMOT-2022-4-24/tmp/sportsmot-test/PDSMV2SportsTrackerT1/data1'
-outputpath = "/home/wj/ai/mldata1/SportsMOT-2022-4-24/tmp/postprocess_output1"
+args = parse_args()
+folderpath = args.input_txt_dir
+outputpath = args.output_txt_dir
 if not os.path.exists(outputpath):
     os.mkdir(outputpath)
 files = glob.glob(osp.join(folderpath,"*.txt"))

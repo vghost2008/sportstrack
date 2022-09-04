@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 from tqdm import tqdm
 import copy
+import wml_utils as wmlu
 
 
 def txt_to_dict(txt_path):
@@ -54,32 +55,8 @@ def batch_frame_iou(frame_list1, frame_list2):
             dist[i][j] = frame_iou(f_list1, f_list2)
     return dist
 
-
-def get_query_featureV2(info_dict, frame_list, pid, image_dir, reid_model=None):
-    """
-    info_dict[person_id][frame_id][bboxes]
-    """
-    features = {}
-    query_image = []
-    for fid in frame_list:
-        image = cv2.imread(os.path.join(image_dir, "img1", str(fid).zfill(6) + '.jpg'))
-        if pid in info_dict[fid]:
-            bbox = info_dict[fid][pid]
-            bbox = np.array(bbox).reshape(-1, ).astype(np.int)
-            crop_image = image[bbox[1]: bbox[1] + bbox[3], bbox[0]: bbox[0] + bbox[2], :]
-            # cv2.imshow("crop_image", crop_image)
-            crop_image = cv2.resize(crop_image, (128, 256))
-            query_image.append(crop_image[:, :, ::-1])
-            # cv2.imshow("crop_image_resize", crop_image)
-            # cv2.waitKey(0)
-    query_feature = get_query_reid(np.array(query_image), reid_model=reid_model)
-    return query_feature
-
-
-def get_query_feature(info_dict, image_dir, reid_model=None):
-    """
-    info_dict[person_id][frame_id][bboxes]
-    """
+'''def get_query_feature(info_dict, image_dir, reid_model=None):
+    #info_dict[person_id][frame_id][bboxes]
     features = {}
     for pid in info_dict.keys():
         frame_ids = info_dict[pid].keys()
@@ -97,6 +74,39 @@ def get_query_feature(info_dict, image_dir, reid_model=None):
             # cv2.imshow("crop_image_resize", crop_image)
             # cv2.waitKey(0)
         query_feature = get_query_reid(np.array(query_image), reid_model=reid_model)
+        features[pid] = query_feature
+    return features
+'''
+def get_query_feature(info_dict, info_dict2,image_dir, reid_model=None):
+    """
+    info_dict[fid][pid][bboxes]
+    """
+    tmp_features = {}
+    for frame_id in info_dict.keys():
+        image = cv2.imread(os.path.join(image_dir, "img1", str(frame_id).zfill(6) + '.jpg'))
+        pids = list(info_dict[frame_id].keys())
+        if len(pids)==0:
+            continue
+        query_image = []
+        for pid in pids:
+            bbox = info_dict[frame_id][pid]
+            bbox = np.array(bbox).reshape(-1, ).astype(np.int)
+            crop_image = image[bbox[1]: bbox[1] + bbox[3], bbox[0]: bbox[0] + bbox[2], :].copy()
+            crop_image = cv2.resize(crop_image, reid_model.size)
+            query_image.append(crop_image[:, :, ::-1])
+        query_feature = get_query_reid(np.array(query_image), reid_model=reid_model)
+        tmp_features[frame_id] = {}
+        for i,pid in enumerate(pids):
+            tmp_features[frame_id][pid] = query_feature[i]
+
+    features = {}
+    for pid in info_dict2.keys():
+        frame_ids = list(info_dict2[pid].keys())
+        query_feature = []
+        features[str(pid) + "_frame_id"] = list(frame_ids)
+        for frame_id in frame_ids:
+            query_feature.append(tmp_features[frame_id][pid])
+        query_feature = np.array(query_feature,dtype=np.float32)
         features[pid] = query_feature
     return features
 

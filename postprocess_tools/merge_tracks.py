@@ -3,23 +3,28 @@ import pickle
 import sys
 sys.path.append("..")
 import shutil
-import cv2
 import numpy as np
-
-from postprocess_tools import vis_utils
 from post_process import txt_to_dict, txt_to_dictv2, batch_frame_iou, get_query_feature, normal_feature
 import post_process
-from postprocess_tools import recurse_get_filepath_in_dir, create_empty_dir
+from postprocess_tools import create_empty_dir
 from mfast_reid_t1.fast_reid import MFastReIDT1 as ReIDModel
-
+import argparse
 from dis_tools import distance
 
+def parse_args():
+    parser = argparse.ArgumentParser(description='MOT')
+    parser.add_argument('--image_dir', type=str,default=r"/home/wj/ai/mldata1/SportsMOT-2022-4-24/data/sportsmot_publish/dataset/test", help='input img dir')
+    parser.add_argument('--input_txt_dir', type=str,default=r"/home/wj/ai/mldata1/SportsMOT-2022-4-24/tmp/sportsmot-test/PDSMV2SportsTrackerT1/data", help='input dir path')
+    parser.add_argument('--img_save_dir', type=str,default=r"/home/wj/ai/mldata1/SportsMOT-2022-4-24/tmp/postprocess_vis", help='output img dir, for debug')
+    parser.add_argument('--output_txt_dir', type=str,default=r"/home/wj/ai/mldata1/SportsMOT-2022-4-24/tmp/postprocess_output",help='output txt dir')
+    return parser.parse_args()
+
 if __name__ == "__main__":
-    image_dir = r"/home/wj/ai/mldata1/SportsMOT-2022-4-24/data/sportsmot_publish/dataset/test"
-    txt_dir = r"/home/wj/ai/mldata1/SportsMOT-2022-4-24/tmp/sportsmot-test/PDSMV2SportsTrackerT1/data"
-    save_dir = r"/home/wj/ai/mldata1/SportsMOT-2022-4-24/tmp/postprocess_vis"
-    txt_dir_save = r"/home/wj/ai/mldata1/SportsMOT-2022-4-24/tmp/postprocess_output"
-    # create_empty_dir(save_dir, remove_if_exists=True)
+    args = parse_args()
+    image_dir = args.image_dir
+    txt_dir = args.input_txt_dir
+    save_dir = args.img_save_dir
+    txt_dir_save = args.output_txt_dir
     create_empty_dir(txt_dir_save, remove_if_exists=False)
     #reid_model = ReidYXDModelTorch()
     reid_model = ReIDModel()
@@ -36,7 +41,7 @@ if __name__ == "__main__":
         # dist_i = batch_frame_iou(p_frame_list, p_frame_list)
         pkl_path = os.path.join(txt_dir, name + '.pkl')
         if not os.path.exists(pkl_path):
-            query_feature = get_query_feature(info_dict2, os.path.join(image_dir, name), reid_model=reid_model)
+            query_feature = get_query_feature(info_dict,info_dict2, os.path.join(image_dir, name), reid_model=reid_model)
             f_save = open(pkl_path, 'wb')
             pickle.dump(query_feature, f_save)
             f_save.close()
