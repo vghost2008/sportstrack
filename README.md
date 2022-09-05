@@ -64,8 +64,8 @@ python postprocess_tools/interpolation.py --input_txt_dir ... --output_txt_dir .
 Example:
 
 ```
- python postprocess_tools/merge_tracks.py --image_dir ~/ai/mldata1/SportsMOT-2022-4-24/data/sportsmot_publish/dataset/sportsmot-mini-val --input_txt_dir ~/ai/mldata1/SportsMOT-2022-4-24/tmp/sportsmot-mini-val/PDSMV2SportsTrackerT1/data_org/ --output_txt_dir ~/ai/mldata1/SportsMOT-2022-4-24/tmp/sportsmot-mini-val/PDSMV2SportsTrackerT1/data_fastreid
-  python postprocess_tools/interpolation.py --input_txt_dir ~/ai/mldata1/SportsMOT-2022-4-24/tmp/sportsmot-mini-val/PDSMV2SportsTrackerT1/data_org/ --output_txt_dir ~/ai/mldata1/SportsMOT-2022-4-24/tmp/sportsmot-mini-val/PDSMV2SportsTrackerT1/data_inter
+ python postprocess_tools/merge_tracks.py --image_dir ${SPORTSTRACK_ROOT}/data/sportsmot_publish/dataset/test --input_txt_dir ${SPORTSTRACK_ROOT}/tmp/sportsmot-test/PDSMV2SportsTrackerT1/data/ --output_txt_dir ${SPORTSTRACK_ROOT}/tmp/sportsmot-test/PDSMV2SportsTrackerT1/data_merge
+ python postprocess_tools/interpolation.py --input_txt_dir ${SPORTSTRACK_ROOT}/tmp/sportsmot-test/PDSMV2SportsTrackerT1/data_merge/ --output_txt_dir ${SPORTSTRACK_ROOT}/tmp/sportsmot-test/PDSMV2SportsTrackerT1/data_inter
 ```
 
 ## requirements
