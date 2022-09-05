@@ -15,6 +15,27 @@
 ```
 export SPORTSTRACK_ROOT=...
 ```
+
+```
+ls  ${SPORTSTRACK_ROOT}/data/sportsmot_publish/dataset/test
+```
+
+output
+```
+v_1UDUODIBSsc_c001  v_2ChiYdg5bxI_c058  v_2Dw9QNH5KtU_c014  v_7FTsO8S3h88_c007  v_9p0i81kAEwE_c010  v_BdD9xu0E2H4_c011  v_czYZnO9QxYQ_c020
+...
+```
+
+- build gmc
+
+```
+cd gmc
+mkdir build
+cd build
+cmake ..
+make
+./gmc ${SPORTSTRACK_ROOT}/data/sportsmot_publish/dataset/test
+```
 - run alogrithm 
 
 ```
@@ -27,11 +48,24 @@ or
 python main.py --split test --gpus 0
 ```
 
+or use multi process
+
+```
+python multi_process_main.py --split test --gpus 0
+```
+
 - post process
 
 ```
-python postprocess_tools/merge_tracks.py
-python postprocess_tools/interpolation.py
+python postprocess_tools/merge_tracks.py --image_dir ... --input_txt_dir ... --output_txt_dir ...
+python postprocess_tools/interpolation.py --input_txt_dir ... --output_txt_dir ...
+```
+
+Example:
+
+```
+ python postprocess_tools/merge_tracks.py --image_dir ~/ai/mldata1/SportsMOT-2022-4-24/data/sportsmot_publish/dataset/sportsmot-mini-val --input_txt_dir ~/ai/mldata1/SportsMOT-2022-4-24/tmp/sportsmot-mini-val/PDSMV2SportsTrackerT1/data_org/ --output_txt_dir ~/ai/mldata1/SportsMOT-2022-4-24/tmp/sportsmot-mini-val/PDSMV2SportsTrackerT1/data_fastreid
+  python postprocess_tools/interpolation.py --input_txt_dir ~/ai/mldata1/SportsMOT-2022-4-24/tmp/sportsmot-mini-val/PDSMV2SportsTrackerT1/data_org/ --output_txt_dir ~/ai/mldata1/SportsMOT-2022-4-24/tmp/sportsmot-mini-val/PDSMV2SportsTrackerT1/data_inter
 ```
 
 ## requirements

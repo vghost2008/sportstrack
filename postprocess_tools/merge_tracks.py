@@ -4,10 +4,12 @@ import sys
 sys.path.append("..")
 import shutil
 import numpy as np
+import os.path as osp
 from post_process import txt_to_dict, txt_to_dictv2, batch_frame_iou, get_query_feature, normal_feature
 import post_process
 from postprocess_tools import create_empty_dir
 from mfast_reid_t1.fast_reid import MFastReIDT1 as ReIDModel
+from deep_reid.deep_reid import DeepReID
 import argparse
 from dis_tools import distance
 
@@ -26,11 +28,11 @@ if __name__ == "__main__":
     save_dir = args.img_save_dir
     txt_dir_save = args.output_txt_dir
     create_empty_dir(txt_dir_save, remove_if_exists=False)
-    #reid_model = ReidYXDModelTorch()
-    reid_model = ReIDModel()
+    #reid_model = ReIDModel()
+    reid_model = DeepReID()
     for name in os.listdir(image_dir):
-        # if name !='v_00HRwkvvjtQ_c007':
-        #     continue
+        if not osp.isdir(osp.join(image_dir,name)):
+            continue
         print(f"{name} is started")
         txt_path = os.path.join(txt_dir, name + '.txt')
         txt_save_path = os.path.join(txt_dir_save, name + '.txt')
