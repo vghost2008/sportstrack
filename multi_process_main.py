@@ -33,12 +33,11 @@ from eval_mot import eval as mot_eval
 if __name__ == "__main__":
     dataset_name = "sportsmot"
     split = args.split
-    if split.startswith("MOT"):
-        videos_path = osp.join("/home/wj/ai/mldata/MOT",split,"test")
-    else:
-        videos_path = osp.join("/home/wj/ai/mldata1/SportsMOT-2022-4-24/data/sportsmot_publish/dataset",split)
+    data_root = os.environ.get("SPORTSTRACK_ROOT", "/home/wj/ai/mldata1/SportsMOT-2022-4-24")
+    videos_path = osp.join(data_root, "data/sportsmot_publish/dataset", split)
     basename = split
-    trackers_dir = "/home/wj/ai/mldata1/SportsMOT-2022-4-24/tmp/"
+    trackers_dir = osp.join(data_root,"tmp/")
+
     if len(args.config)>1:
         if not str(args.config).startswith("config"):
             args.config = "config"+str(args.config)
@@ -71,6 +70,5 @@ if __name__ == "__main__":
     time.sleep(5)
 
     mot_eval(osp.dirname(videos_path),trackers_dir,BENCHMARK=dataset_name,split=basename,trackers_to_eval=tracker_name)
-    print(f"python do_eval.py --config {args.config} --gpus {args.gpus} --split {args.split} --dataset {args.dataset} --skip_exists True"
-)
+    print(f"python do_eval.py --config {args.config} --gpus {args.gpus} --split {args.split} --dataset {args.dataset} --skip_exists True")
 
