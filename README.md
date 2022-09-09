@@ -70,8 +70,16 @@ Example:
 
 ## requirements
 
-- [wml2](https://github.com/vghost2008/wml2)
 - pytorch
+- [wml2](https://github.com/vghost2008/wml2)
+ 
+install wml2
+
+```
+git clone git@github.com:vghost2008/wml2.git
+cd wml2
+export PYTHONPATH=${PYTHONPATH}:`pwd`
+```
 
 
 ## Team members
