@@ -18,13 +18,9 @@ namespace fs=std::experimental::filesystem;
 // --------------------------------------------
 // Global Parameters
 // --------------------------------------------
-std::string dataPath = "~/Datasets";
-std::string savePath = "./Results";
 int downscale = 2;
 
 bool WITH_MASKING = false; // true | false
-std::string detectionsPath = "";
-
 // --------------------------------------------
 
 
@@ -88,10 +84,6 @@ int GMC(const string& _path)
     cv::Ptr<cv::videostab::MotionEstimatorRansacL2> est = cv::makePtr<cv::videostab::MotionEstimatorRansacL2>(cv::videostab::MM_SIMILARITY);
     cv::Ptr<cv::videostab::KeypointBasedMotionEstimator> kbest = cv::makePtr<cv::videostab::KeypointBasedMotionEstimator>(est);
 
-    if (!std::experimental::filesystem::is_directory(savePath) || !std::experimental::filesystem::exists(savePath))
-    {
-        std::experimental::filesystem::create_directory(savePath);
-    }
 
     std::ofstream outFile;
 
