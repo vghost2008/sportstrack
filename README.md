@@ -36,7 +36,7 @@ mkdir build
 cd build
 cmake ..
 make
-./gmc ${SPORTSTRACK_ROOT}/data/sportsmot_publish/dataset/test/*   #this will generate a gmc.txt file in all input directorys
+./gmc ${SPORTSTRACK_ROOT}/data/sportsmot_publish/dataset/test/*   #this will generate a gmc.txt file in each input directorys
 ./gmc ${SPORTSTRACK_ROOT}/data/sportsmot_publish/dataset/val/* 
 ```
 - run algorithm 
