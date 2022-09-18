@@ -10,6 +10,8 @@
 
 ## Quick Start
 
+- Download SportsMOT dataset from [here](https://codalab.lisn.upsaclay.fr/competitions/4433)
+
 - set data root path of sports MOT dataset
 
 ```
