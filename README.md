@@ -34,24 +34,25 @@ mkdir build
 cd build
 cmake ..
 make
-./gmc ${SPORTSTRACK_ROOT}/data/sportsmot_publish/dataset/test
+./gmc ${SPORTSTRACK_ROOT}/data/sportsmot_publish/dataset/test/*   #this will generate a gmc.txt file in all input directorys
+./gmc ${SPORTSTRACK_ROOT}/data/sportsmot_publish/dataset/val/* 
 ```
-- run alogrithm 
+- run algorithm 
 
 ```
-python main.py --split val --gpus 0
+python main.py --split val --gpus 0    #track on val dataset 
 ```
 
 or 
 
 ```
-python main.py --split test --gpus 0
+python main.py --split test --gpus 0  #track on test dataset
 ```
 
 or use multi process
 
 ```
-python multi_process_main.py --split test --gpus 0
+python multi_process_main.py --split test --gpus 0   #use multiprocess to track on test dataset 
 ```
 
 - post process
