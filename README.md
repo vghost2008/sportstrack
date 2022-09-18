@@ -28,6 +28,8 @@ v_1UDUODIBSsc_c001  v_2ChiYdg5bxI_c058  v_2Dw9QNH5KtU_c014  v_7FTsO8S3h88_c007  
 
 - build gmc
 
+build gmc need opencv4
+
 ```
 cd gmc
 mkdir build
@@ -95,8 +97,4 @@ export PYTHONPATH=${PYTHONPATH}:`pwd`
 ## Acknowledge
 
 We acknowledge the excellent implementation from [YOLOX](https://github.com/Megvii-BaseDetection/YOLOX) , [FastReID](https://github.com/JDAI-CV/fast-reid) and [HRNet](https://github.com/leoxiaobin/deep-high-resolution-net.pytorch).
-
-
-
-
 
