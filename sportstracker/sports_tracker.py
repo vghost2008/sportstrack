@@ -98,7 +98,6 @@ class SportsTracker(object):
         inds_second = np.where(inds_second)[0].tolist()
 
 
-        ''' Add newly detected tracklets to tracked_stracks'''
         unconfirmed = []
         tracked_stracks = []  # type: list[STrack]
         for track in self.tracked_stracks:
@@ -108,7 +107,6 @@ class SportsTracker(object):
             else:
                 tracked_stracks.append(track)
 
-        ''' Step 2: First association, with high score detection boxes'''
         STrack.multi_predict(tracked_stracks)
         lost_pred_time = 10
         for track in self.lost_stracks:
@@ -143,9 +141,6 @@ class SportsTracker(object):
             det.set_track_idx(i)
             det.set_kps(self.cur_kps[i])
 
-        if len(self.lost_stracks)>1:
-            log_print("A")
-        
         self.mark_hard_easy_tracks(strack_pool)
         self.set_fake_new_track(strack_pool,all_detections,self.cur_frame.shape,threshold=0.5)
 
@@ -163,10 +158,8 @@ class SportsTracker(object):
             have_embedding_match = False
         #######################################try match end
 
+        '''First association, with strick threshold'''
         dists = matching.kps_distancev2(strack_pool, all_detections)
-        '''e_dists = matching.embedding_distance(strack_pool, all_detections)*2.5
-        e_dists = matching.fuse_giouv2(e_dists, strack_pool, all_detections)
-        dists = np.where(dists<e_dists,dists,e_dists)'''
         dists = matching.fuse_embeddingv2(dists,strack_pool,all_detections)
         dists = set_untracked_dis(dists,strack_pool)
 
@@ -192,16 +185,11 @@ class SportsTracker(object):
         detections = gather_tracks_by_idx(all_detections,inds_remain)
         detections_second = gather_tracks_by_idx(all_detections,inds_second)
 
+        #Second association, with high score detection boxes
         strack_pool = [strack_pool[i] for i in u_track]
         ######################################################################
-
-
-        # Predict the current location with KF
-
         dists = matching.embedding_distance(strack_pool, detections)
-        #dists = matching.iou_distance(strack_pool, detections)
         tmp_outdata = []
-        #log_print([x.track_id for x in strack_pool])
         dists = matching.fuse_giou(dists, strack_pool, detections,out_data=tmp_outdata)
         matches, u_track, u_detection = matching.linear_assignment(dists, 
                                         thresh=self.assignment_thresh[3])
@@ -278,10 +266,9 @@ class SportsTracker(object):
                 track.re_activate(det, self.frame_id, new_id=False)
                 refind_stracks.append(track)
             matched_dets.append(det.raw_tlbr)
-        #Step 4: Second association, with low score detection boxes
+        #Third association, with low score detection boxes
         # association the untrack to the low score detections
         r_tracked_stracks = [strack_pool[i] for i in u_track if strack_pool[i].state == TrackState.Tracked]
-        #dists = matching.iou_distance(r_tracked_stracks, detections_second)
         dists = matching.kps_distancev2(r_tracked_stracks, detections_second)
         matches, u_track, u_detection_second = matching.linear_assignment(dists, thresh=self.assignment_thresh[1])
 
@@ -299,7 +286,6 @@ class SportsTracker(object):
                 refind_stracks.append(track)
             log_print(track.track_id,dists[itracked,idet])
         
-        #iou process
         detections_second = [detections_second[i] for i in u_detection_second]
         r_tracked_stracks = [r_tracked_stracks[i] for i in u_track]
 
@@ -336,10 +322,7 @@ class SportsTracker(object):
 
         #Deal with unconfirmed tracks, usually tracks with only one beginning frame
         detections = [detections[i] for i in u_detection]
-        #dists = matching.iou_distance(unconfirmed, detections)
         dists = matching.kps_distancev2(unconfirmed, detections)
-        #jif not self.args.mot20:
-        #    dists = matching.fuse_score(dists, detections)
         matches, u_unconfirmed, u_detection = matching.linear_assignment(dists, thresh=self.assignment_thresh[2])
         log_print(f"kps unconfirmed")
         for itracked, idet in matches:
@@ -352,10 +335,7 @@ class SportsTracker(object):
         #process iou
         detections = [detections[i] for i in u_detection]
         unconfirmed = [unconfirmed[i] for i in u_unconfirmed]
-        #dists = matching.iou_distance(unconfirmed, detections)
         dists = matching.iou_distancev2(unconfirmed, detections)
-        #jif not self.args.mot20:
-        #    dists = matching.fuse_score(dists, detections)
         matches, u_unconfirmed, u_detection = matching.linear_assignment(dists, thresh=self.assignment_thresh[2])
         log_print(f"iou unconfirmed")
         for itracked, idet in matches:
@@ -391,7 +371,6 @@ class SportsTracker(object):
                 track.mark_removed()
                 removed_stracks.append(track)
 
-        # log_print('Ramained match {} s'.format(t4-t3))
 
         self.tracked_stracks = [t for t in self.tracked_stracks if t.state == TrackState.Tracked]
         self.tracked_stracks = joint_stracks(self.tracked_stracks, activated_starcks)

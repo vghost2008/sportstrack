@@ -200,7 +200,7 @@ class STrack(BaseTrack):
             
         self.frame_id = frame_id
 
-        print("UPDATE with fake target:",self.frame_id,self)
+        print("UPDATE with one to many bbox:",self.frame_id,self)
 
         self.fake_match_nr += 1
         self.tracklet_len += 1
@@ -337,7 +337,8 @@ class STrack(BaseTrack):
        delta = 10
        iou = odb.npbboxes_jaccard([bbox],[cur_bbox])[0]
        if iou<0.1:
-           print(f"ERROR in set kps: {kps}, {bbox}, {cur_bbox} {self.start_frame}")
+           #print(f"ERROR in set kps: {kps}, {bbox}, {cur_bbox} {self.start_frame}")
+           pass
 
     @staticmethod
     def features_dis(featuresa,featuresb=None):
