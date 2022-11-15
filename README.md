@@ -1,5 +1,7 @@
 #sportstrack
 
+This repository is an official implementation of the [SportsTrack: An Innovative Method for Tracking Athletes in Sports Scenes](https://arxiv.org/abs/2211.07173)
+
 1st place of 2022 ECCV Sports MOT challenge.
 
 ## Result On SportsMOT test
@@ -91,7 +93,7 @@ export PYTHONPATH=${PYTHONPATH}:`pwd`
 
 - Jie Wang
 - Xiaodong Yang
-- Pengyu Zhou
+- YuZhou Peng
 - Ting Wang 
 - Yanming Zhang
 
