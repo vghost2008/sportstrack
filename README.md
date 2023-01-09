@@ -8,7 +8,7 @@ This repository is an official implementation of the [SportsTrack: An Innovative
 
 |Method|HOTA|AssA|DetA|MOTA|weight|
 |---|---|---|---|---|---|
-|SportsTrack|76.264|73.538|79.180|89.316|[baidu](https://pan.baidu.com/s/1_LP0F-EblkiZ8olI4iv1Pw?pwd=nvq4)[onedrive](https://1drv.ms/u/s!AgjlRcyoX2EEbu1M3r3JcCswGz0?e=tRddZC)|
+|SportsTrack|76.264|73.538|79.180|89.316|[baidu](https://pan.baidu.com/s/1_LP0F-EblkiZ8olI4iv1Pw?pwd=nvq4)/[onedrive](https://1drv.ms/u/s!AgjlRcyoX2EEbu1M3r3JcCswGz0?e=tRddZC)|
 
 ## Quick Start
 
