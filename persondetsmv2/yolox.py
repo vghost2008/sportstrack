@@ -12,7 +12,6 @@ import torchvision.transforms
 import torch.multiprocessing
 import numpy as np
 import onnxruntime as ort
-from wtorch.soft_nms import soft_nms
 import wml_utils as wmlu
 
 

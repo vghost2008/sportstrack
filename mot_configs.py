@@ -18,24 +18,22 @@ config_sportstrack = {'model': 'SportsTracker',
  'thresh': [0.5469308237306498, 0.641378722, 0.36310692739022454],
  'nms_thresh': 0.45681998911015786
  }
-'''config_byte_tracker = {  #(61.365    78.858    47.839) 
-#58.043
+config_byte_tracker = {  #(61.365    78.858    47.839) 
     "model":"BYTETracker",
     "TrackName":"PDSMV2ByteTracker",
     "use_reid":False,
     "reid_model":MFastReIDT1,
-    "person_det":PersonDetectionSMV2,
-    "det_thresh":0.5,
+    "person_det":PersonDetectionSMSV2,
+    "det_thresh":0.7,
     "max_person_nr":-1,
 }
 config_bot_sort = {  #(65.707    78.583    54.997)
-#63.623
     "model":"BoTSORT",
     "TrackName":"PDSMV2BoTSORT",
     "use_reid":True,
     "reid_model":MFastReIDT1,
-    "person_det":PersonDetectionSMV2,
-    "det_thresh":0.5,
+    "person_det":PersonDetectionSMSV2,
+    "det_thresh":0.7,
     "max_person_nr":-1,
-}'''
+}
 global_config = config_sportstrack

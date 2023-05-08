@@ -78,13 +78,13 @@ Example:
 ## requirements
 
 - pytorch
-- [wml2](https://github.com/vghost2008/wml2)
+- [wml](https://github.com/vghost2008/wml)
  
-install wml2
+install wml
 
 ```
-git clone git@github.com:vghost2008/wml2.git
-cd wml2
+git clone git@github.com:vghost2008/wml.git
+cd wml
 export PYTHONPATH=${PYTHONPATH}:`pwd`
 ```
 

@@ -56,7 +56,7 @@ if __name__ == "__main__":
             args.config = "config"+str(args.config)
         global_config = eval(args.config)
     tracker_name = global_config["TrackName"]
-    print(f"Track name {tracker_name}")
+    print(f"Track name {tracker_name}, gpus={os.environ['CUDA_VISIBLE_DEVICES']}")
     sys.stdout.flush()
     save_path0 = osp.join(trackers_dir,basename,tracker_name)
     save_path1 = osp.join(trackers_dir,dataset_name+"-"+basename,tracker_name,"data")
